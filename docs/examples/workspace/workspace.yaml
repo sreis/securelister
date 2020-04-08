@@ -1,0 +1,7 @@
+note: Workspace Example
+sample: |
+  apiVersion: workspaces.sreis.pt/v1
+  kind: Workspace
+  metadata:
+    name: workspace-example
+  spec:
