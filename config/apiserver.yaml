@@ -1,0 +1,190 @@
+
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1.workspaces.sreis.pt
+  labels:
+    api: securelister
+    apiserver: "true"
+spec:
+  version: v1
+  group: workspaces.sreis.pt
+  groupPriorityMinimum: 2000
+  service:
+    name: securelister
+    namespace: default
+  versionPriority: 10
+  caBundle: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR1VENDQXFHZ0F3SUJBZ0lVSGF4MXVsWHZTeG1GVC9rVjVteTZJMjdDQ0VJd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2JERUxNQWtHQTFVRUJoTUNkVzR4Q3pBSkJnTlZCQWdNQW5OME1Rb3dDQVlEVlFRSERBRnNNUW93Q0FZRApWUVFLREFGdk1Rc3dDUVlEVlFRTERBSnZkVEVyTUNrR0ExVUVBd3dpYzJWamRYSmxiR2x6ZEdWeUxXTmxjblJwClptbGpZWFJsTFdGMWRHaHZjbWwwZVRBZUZ3MHlNREEwTURreE1qQXlOVEZhRncweU1UQTBNRGt4TWpBeU5URmEKTUd3eEN6QUpCZ05WQkFZVEFuVnVNUXN3Q1FZRFZRUUlEQUp6ZERFS01BZ0dBMVVFQnd3QmJERUtNQWdHQTFVRQpDZ3dCYnpFTE1Ba0dBMVVFQ3d3Q2IzVXhLekFwQmdOVkJBTU1Jbk5sWTNWeVpXeHBjM1JsY2kxalpYSjBhV1pwClkyRjBaUzFoZFhSb2IzSnBkSGt3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQzkKSUJjczRjL3MrY2tnYTc2S3lIQnRtVlh6VkVybTk4SGd0QTdyeTBmNTFMcGREQjRyYzV3OHoyNEgxUEsvUlEvYQp5VHZDdDZsQUZwREpOQnBDQnYzOFl6SmxURFNBUGZYcTZtZTFPMU8xKzg1cnR0S21sUnIyM0VNTVdtbjA3MlBFCjRkaUdXSHR1MnFLc0ZEa3ZFV0NoSnl2cmduWVFRRWY2eFVGMTI5dGE0YnlaZnFFVzF1ZTEwckVsbmhJbUQ1bWsKaTE1Qk5wekxuOVhsWThlTjdCSGoyVTQxWHBkaW4rVUlMZ1JlQzZoSFNyWElCUHZrbVhrTVhwS3BRMGd6V3Viawp4ZVVkOTFVNHZkczRBa0M1Y2RWWExMWjVFcXJOb1pzUFRRNFR6VmVZNlBnOGliR0o3dE5ydGZZNjBtbVhzVmJkCk9lQWE0YnFHMUw4N1lkdFFmcDBUQWdNQkFBR2pVekJSTUIwR0ExVWREZ1FXQkJTaExjTzhETDZSby9NZUFGN0wKZDM1WE8xQmwrVEFmQmdOVkhTTUVHREFXZ0JTaExjTzhETDZSby9NZUFGN0xkMzVYTzFCbCtUQVBCZ05WSFJNQgpBZjhFQlRBREFRSC9NQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJZcy9uMGgzV3RHY1IvYS9hMkhvOXo4NGpXCjkzWTNUR1JkWWpCd2dlVEJ4V0kxNVFqNG5kdVpKUjJuSHd6d1lkVS9WWGl3T2NBVng3M3NadkNPc09vT0dmV3IKQlJXL0R6ODlTYWl1dXpXZHliaVlpNEpCTFRJQ1FWN3JONmlsSlk2a0ZvRnkyaHpKSzBNQU1SRXoyNCt6eUFmagpFMG9WK1JOTFJhM2Jza3V1ZVgzYlg0cUZnRTFBdk5BOVJwbUl4NXFRbnpwejMyNWlLdERnZ1JPWndpNitVNkh3Ck91Q1ZXaVdHcW1Ua2JPZ0JLVWgwUU1JaVdWQm53eG1aZ2EwVkxWN3FRcUxhaHZXRXJrcklId2RNSEIzYVVuOHIKd1ZUNkhnVExRS1dTSmFoVkRjYW9VZmxhM2p6V3RBOVArdTJuUEFHUWhSQkpDYjZlTzJZazBsVi9DVlYyCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: securelister
+  namespace: default
+  labels:
+    api: securelister
+    apiserver: "true"
+spec:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 8443
+  selector:
+    api: securelister
+    apiserver: "true"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    api: securelister
+    apiserver: "true"
+  name: securelister-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: securelister-clusterrole
+  labels:
+    api: securelister
+    apiserver: "true"
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - configmaps
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - "authorization.k8s.io"
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - "admissionregistration.k8s.io"
+  resources:
+  - validatingwebhookconfigurations
+  - mutatingwebhookconfigurations
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: securelister-clusterrolebinding
+  labels:
+    api: securelister
+    apiserver: "true"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: securelister-clusterrole
+subjects:
+- kind: ServiceAccount
+  name: securelister-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: securelister-rolebinding
+  namespace: kube-system
+  labels:
+    api: securelister
+    apiserver: "true"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+- kind: ServiceAccount
+  name: securelister-sa
+  namespace: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: securelister
+  namespace: default
+  labels:
+    api: securelister
+    apiserver: "true"
+spec:
+  selector:
+    matchLabels:
+      api: securelister
+      apiserver: "true"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        api: securelister
+        apiserver: "true"
+    spec:
+      serviceAccountName: securelister-sa
+      containers:
+      - name: apiserver
+        image: sreis/securelister:latest
+        volumeMounts:
+        - name: apiserver-certs
+          mountPath: /apiserver.local.config/certificates
+          readOnly: true
+        command:
+        - "./apiserver"
+        args:
+        - "--tls-cert-file=/apiserver.local.config/certificates/tls.crt"
+        - "--tls-private-key-file=/apiserver.local.config/certificates/tls.key"
+        - "--audit-log-path=-"
+        - "--audit-log-maxage=0"
+        - "--audit-log-maxbackup=0"
+        - "--secure-port=8443"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 20Mi
+          limits:
+            cpu: 100m
+            memory: 30Mi
+      - name: controller
+        image: sreis/securelister:latest
+        command:
+        - "./controller-manager"
+        args:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 20Mi
+          limits:
+            cpu: 100m
+            memory: 30Mi
+      volumes:
+      - name: apiserver-certs
+        secret:
+          secretName: securelister
+---
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/tls
+metadata:
+  name: securelister
+  namespace: default
+  labels:
+    api: securelister
+    apiserver: "true"
+data:
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURWVENDQWowQ0ZHdGFVdnQyUzJNRCsxZGxQeklVWVdGalo1UFdNQTBHQ1NxR1NJYjNEUUVCQ3dVQU1Hd3gKQ3pBSkJnTlZCQVlUQW5WdU1Rc3dDUVlEVlFRSURBSnpkREVLTUFnR0ExVUVCd3dCYkRFS01BZ0dBMVVFQ2d3QgpiekVMTUFrR0ExVUVDd3dDYjNVeEt6QXBCZ05WQkFNTUluTmxZM1Z5Wld4cGMzUmxjaTFqWlhKMGFXWnBZMkYwClpTMWhkWFJvYjNKcGRIa3dIaGNOTWpBd05EQTVNVEl3TWpVeVdoY05NakV3TkRBNU1USXdNalV5V2pCaU1Rc3cKQ1FZRFZRUUdFd0oxYmpFTE1Ba0dBMVVFQ0F3Q2MzUXhDakFJQmdOVkJBY01BV3d4Q2pBSUJnTlZCQW9NQVc4eApDekFKQmdOVkJBc01BbTkxTVNFd0h3WURWUVFEREJoelpXTjFjbVZzYVhOMFpYSXVaR1ZtWVhWc2RDNXpkbU13CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURtQ0Z6SXpLNy9XUlp6L1pxNmQxRlkKTDB0bkhrSm01d2VwVVROTHdlTEswL25TaEh4U3VpRUJGTzB0Zkh5R2NkMFBGTThCdG5ncGN0UGdhS2h4a2NlawpnWkF0dmlIUWk5NDdwQWdmbjU5cHY3TlB6VkRZdklUMEEvcjB4K3RzN2FYb0VSS0pkZjQ0ZXFRYUJYRXdRQ3JoCnA2ay9UOGprNWhRcUZLKzUyVm1NTEF5bDN5TlNWdG9vQjhYRnY4VFFtRGF0Vmt6SmM5Qk1VZDZwSmFCL0RmbnoKNk1aODBXSGxTeGlWWXpNbVkzSjlPbXorbVFnT1k2cGRJcE1ZWjRaU0t0OXhOd3IxbWJyL3dJTTJUd1VPTHJyMgpnWDc4YUUvdHN0QWRIVitNVVJ4MVRyWWFXRjJiaTZHeWRMNXhBK2hvWDlDSThyczhNZGZrRkxZOHVualRrNnpuCkFnTUJBQUV3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUxzZFRiSHRLdTdOd0R1Q2NaNkJoWXoyWjJvT2FKU2kKeEY3OXJIcnBocGcrbWNPdTlpSExTLzRGMWVBa2xGeFRvL0R6WlB6YzZ0bkoxSlhDY0RIRHFlZnVGMXZtei9CSApXeXNocVlWK1ZWVXlIZlYyTHFSc1g0clJVc0RQMG9iWVVrNkdMN29MdVF5dU1lVHlyV2VmT1pnb0liQ1gyd2l6ClVQZHBKZEF4dVFVS2crUW04YW5nQlA2RG1kUG84ZFVrNjFWUFBpR1hkZUgzUkFySE5qZnp0WlJtU3VJV3V4a3MKQndxeXp6c1lPeGN0c0pYaWRsV29lT3UvVUd0VDZLSVc5QkpUdThSdGozQ2NwbFV0VGcreGRDbGFkWVNPazFRcgpXZDc2NjhTSW5IRklaM0hJZVBEbk9TR1k5K2NhQzZIc0MyNUMvakdoMExuWGJGZGRxaW1ydmU4PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRRG1DRnpJeks3L1dSWnoKL1pxNmQxRllMMHRuSGtKbTV3ZXBVVE5Md2VMSzAvblNoSHhTdWlFQkZPMHRmSHlHY2QwUEZNOEJ0bmdwY3RQZwphS2h4a2Nla2daQXR2aUhRaTk0N3BBZ2ZuNTlwdjdOUHpWRFl2SVQwQS9yMHgrdHM3YVhvRVJLSmRmNDRlcVFhCkJYRXdRQ3JocDZrL1Q4ams1aFFxRksrNTJWbU1MQXlsM3lOU1Z0b29COFhGdjhUUW1EYXRWa3pKYzlCTVVkNnAKSmFCL0Rmbno2TVo4MFdIbFN4aVZZek1tWTNKOU9teittUWdPWTZwZElwTVlaNFpTS3Q5eE53cjFtYnIvd0lNMgpUd1VPTHJyMmdYNzhhRS90c3RBZEhWK01VUngxVHJZYVdGMmJpNkd5ZEw1eEEraG9YOUNJOHJzOE1kZmtGTFk4CnVualRrNnpuQWdNQkFBRUNnZ0VCQUs4SEtlSTNxK2ZyRjJTR1VOY1V0clpNdGlqdUkwUTlBZDFaUlppZEhEMk0KY1FnM2VvbFB5cEVTSlMxNURSOFhRRWFiWks4KzhjdEg3ZU5RZnVwN0s5Y0dKbmhIdFY4RExjTmZtamJGcy93NAp1dTA3b2dwbjF4bjhkVlVQVVJqKzhqL1R6YkQrTU1NMHZleDJ1NXNsRi91L0lNNWxuTXhlTEhXZ2E5MFRma2xpClFUQjFicXExaDV0MU9xTzNYT1liNDAxbVZVcDBiZ2t0Vkx3VWpYRktCam1PNmcvM3dLM3kvMnROcGM2RFlDeEoKZy94QWpqbXdKb294dzdkcTdZSUIwQm95d0h0VHNBUkJOejZvQXQzTzF4YVh0YndpaWY5RjFnMW5aRUpTZ0FUSQpkQUc2dS9NVEZXNHpPT1FpWmU2SitHMW9CN2NQRXY0V012WVhpcmE4R09FQ2dZRUEvMVVtZzQ1aENZRmdJRmN0CjloSkxtd1VFVDREYnlzNEpvQXlCL2xyTXdhbXRYZEU2eE85TDNrOHlwRkVMQ1o2eXJtVWdaUlZZSzMwbXZmZUUKUjhKbHJTNzZocEkvTldkTlo3NEdEeWpXVWJsTnp5ZXdKZjduUXNTZGp0ektnbjF5M2V1a01mWHVpQlVVdUhqMQpaUDB2UWZQeGVNRVV0QUZRS284UkhwT0FUTThDZ1lFQTVxSklmSnZZRVlRZTlFcTNJeHFlNTd1eWF4blRwSFQrClRHSTEzYVNIazAycWREb2FPQVhDWUJQZmxTV20zRGRkek9IL2lnQkFNcFhrU2lHS251V2NOOVY5SGVyNTh1OUIKVXB0cCs3cVA1d1RoWnJvZFpwMWloTlo4REhtUTZ5V1pIMERWR1o0L0htOFRWR0tqSFdLMWpySzh2OEp5eitROQplemZSazVmTUZHa0NnWUFDNEJDWTlxZDlGZW5oTTFvZkpVR1lzMHZESVc1WU1FM0hjWnlkSXFTZm9hdUVIUEVPCmVxdGVDNEpFZTIwbVpKVWFoYVVCdm1YSng1VUNHcUZ3dFcyenI0Mitxakx3QlFQSUlVbXNMZ2VMMEF4aVFzNG0KLzJIWFRLT0JrbGJ0ZFVBdjQ1RnJ4cHN6Q1JtOG9oQVJYUkNGSzV3U2dnb2JwTkFrU293a3pnQnAzUUtCZ0E3RApSb2FMWnpvL3pjZHZYT2VuVlpLWnhpTHE1VXc2bk9pQXhOZnFKeTk3b2pTTVg0OUVkeHUxU2ZOL0ZINDJJUS96ClMyc205dlVGK1RYeGpiRDhHNUxMWEpYa3E1a3NUVzhmT1pwK1o2V3UvMHFYRVRpM1RFNGFlSmhIMDhucGZ6S3IKOExnU0ZCSTdvKzRiM2pzTVRYalQ0aGNZT0Vjc1llOFlOSmNRK1dRNUFvR0JBTDcvdDV5S1JROXpqTHR2ek5hNApKWis2VkpiMllkZGc2VEljSXRPNE1Ld0Z0aHFVYVJiUXhaclVQSm9YK1FVcWExTHJLRnhOc2QyS1hEK1pWNUtqCm94YjJEdHA5V1E4L2xtMDlFMEpVcTcySEJDRnZnUWdYbkNlaTlHSDM3VTVTY1JyZ2JZR1VxWWh5aHY0b1drQVEKUTMra3ptRy94SUJqTm90czlQVnY1bG9KCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
