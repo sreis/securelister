@@ -66,6 +66,10 @@ func (r *WorkspaceREST) New() runtime.Object {
 	return &Workspace{}
 }
 
+func (r *WorkspaceREST) NamespaceScoped() bool {
+	return false
+}
+
 func NewWorkspaceREST(_ generic.RESTOptionsGetter) rest.Storage {
 	return &WorkspaceREST{}
 }
