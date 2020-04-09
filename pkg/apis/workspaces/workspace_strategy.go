@@ -1,4 +1,3 @@
-
 /*
 Copyright 2017 The Kubernetes Authors.
 
@@ -15,15 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 package workspaces
 
 import (
 	"context"
+	"fmt"
 
-	"k8s.io/klog"
+	"k8s.io/apimachinery/pkg/apis/meta/internalversion"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation/field"
+	"k8s.io/apiserver/pkg/registry/generic"
+	"k8s.io/apiserver/pkg/registry/rest"
+	"k8s.io/klog"
 )
 
 // Validate checks that an instance of Workspace is well formed
@@ -33,4 +36,36 @@ func (WorkspaceStrategy) Validate(ctx context.Context, obj runtime.Object) field
 	errors := field.ErrorList{}
 	// perform validation here and add to errors using field.Invalid
 	return errors
+}
+
+// +k8s:deepcopy-gen=false
+type WorkspaceREST struct {
+}
+
+func (r *WorkspaceREST) ListWorkspaces(ctx context.Context, options *internalversion.ListOptions) (runtime.Object, error) {
+	return nil, fmt.Errorf("List not supported")
+}
+
+func (r *WorkspaceREST) GetWorkspace(ctx context.Context, id string, options *metav1.GetOptions) (runtime.Object, error) {
+	return nil, fmt.Errorf("Get not supported")
+}
+
+func (r *WorkspaceREST) CreateWorkspace(ctx context.Context, id *Workspace) (runtime.Object, error) {
+	return nil, fmt.Errorf("Create not supported")
+}
+
+func (r *WorkspaceREST) UpdateWorkspace(ctx context.Context, id *Workspace) (runtime.Object, error) {
+	return nil, fmt.Errorf("Update not supported")
+}
+
+func (r *WorkspaceREST) DeleteWorkspace(ctx context.Context, id string) (bool, error) {
+	return false, fmt.Errorf("Delete not supported")
+}
+
+func (r *WorkspaceREST) New() runtime.Object {
+	return &Workspace{}
+}
+
+func NewWorkspaceREST(_ generic.RESTOptionsGetter) rest.Storage {
+	return &WorkspaceREST{}
 }

@@ -1,4 +1,3 @@
-
 /*
 Copyright 2017 The Kubernetes Authors.
 
@@ -15,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 package v1
 
 import (
@@ -27,7 +25,7 @@ import (
 
 // Workspace
 // +k8s:openapi-gen=true
-// +resource:path=workspaces,strategy=WorkspaceStrategy
+// +resource:path=workspaces,strategy=WorkspaceStrategy,rest=WorkspaceREST
 type Workspace struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

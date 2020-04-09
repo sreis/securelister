@@ -31,11 +31,11 @@ import (
 )
 
 var (
-	WorkspacesWorkspaceStorage = builders.NewApiResource( // Resource status endpoint
+	WorkspacesWorkspaceStorage = builders.NewApiResourceWithStorage( // Resource status endpoint
 		InternalWorkspace,
 		func() runtime.Object { return &Workspace{} },     // Register versioned resource
 		func() runtime.Object { return &WorkspaceList{} }, // Register versioned resource list
-		&WorkspaceStrategy{builders.StorageStrategySingleton},
+		NewWorkspaceREST,
 	)
 	InternalWorkspace = builders.NewInternalResource(
 		"workspaces",

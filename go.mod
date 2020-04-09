@@ -3,6 +3,7 @@ module github.com/sreis/securelister
 go 1.13
 
 require (
+	github.com/go-openapi/spec v0.19.3
 	github.com/markbates/inflect v0.0.0-00010101000000-000000000000
 	github.com/onsi/ginkgo v1.11.0
 	github.com/onsi/gomega v1.8.1
