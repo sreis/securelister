@@ -19,6 +19,7 @@ package workspaces
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -43,33 +44,41 @@ type WorkspaceREST struct {
 }
 
 func (r *WorkspaceREST) ListWorkspaces(ctx context.Context, options *internalversion.ListOptions) (runtime.Object, error) {
+	log.Println("ListWorkspaces")
 	return nil, fmt.Errorf("List not supported")
 }
 
 func (r *WorkspaceREST) GetWorkspace(ctx context.Context, id string, options *metav1.GetOptions) (runtime.Object, error) {
+	log.Println("GetWorkspace")
 	return nil, fmt.Errorf("Get not supported")
 }
 
 func (r *WorkspaceREST) CreateWorkspace(ctx context.Context, id *Workspace) (runtime.Object, error) {
+	log.Println("CreateWorkspace")
 	return nil, fmt.Errorf("Create not supported")
 }
 
 func (r *WorkspaceREST) UpdateWorkspace(ctx context.Context, id *Workspace) (runtime.Object, error) {
+	log.Println("UpdateWorkspace")
 	return nil, fmt.Errorf("Update not supported")
 }
 
 func (r *WorkspaceREST) DeleteWorkspace(ctx context.Context, id string) (bool, error) {
+	log.Println("DeleteWorkspace")
 	return false, fmt.Errorf("Delete not supported")
 }
 
 func (r *WorkspaceREST) New() runtime.Object {
+	log.Println("NewWorkspace")
 	return &Workspace{}
 }
 
 func (r *WorkspaceREST) NamespaceScoped() bool {
+	log.Println("NamespaceScoped")
 	return false
 }
 
 func NewWorkspaceREST(_ generic.RESTOptionsGetter) rest.Storage {
+	log.Println("NewWorkspaceREST")
 	return &WorkspaceREST{}
 }

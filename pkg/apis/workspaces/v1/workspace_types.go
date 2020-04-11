@@ -23,7 +23,6 @@ import (
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// Workspace
 // +k8s:openapi-gen=true
 // +resource:path=workspaces,strategy=WorkspaceStrategy,rest=WorkspaceREST
 type Workspace struct {

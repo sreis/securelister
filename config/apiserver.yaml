@@ -81,6 +81,13 @@ rules:
   - get
   - list
   - watch
+# - apiGroups:
+#   - "workspaces.sreis.pt"
+#   resources:
+#   - "*"
+#   verbs:
+#   - "*"
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -139,6 +146,7 @@ spec:
       containers:
       - name: apiserver
         image: sreis/securelister:latest
+        imagePullPolicy: Always
         volumeMounts:
         - name: apiserver-certs
           mountPath: /apiserver.local.config/certificates
@@ -152,6 +160,7 @@ spec:
         - "--audit-log-maxage=0"
         - "--audit-log-maxbackup=0"
         - "--secure-port=8443"
+        - "--v=10"
         resources:
           requests:
             cpu: 100m
@@ -159,18 +168,18 @@ spec:
           limits:
             cpu: 100m
             memory: 30Mi
-      - name: controller
-        image: sreis/securelister:latest
-        command:
-        - "./controller-manager"
-        args:
-        resources:
-          requests:
-            cpu: 100m
-            memory: 20Mi
-          limits:
-            cpu: 100m
-            memory: 30Mi
+      # - name: controller
+      #   image: sreis/securelister:latest
+      #   command:
+      #   - "./controller-manager"
+      #   args:
+      #   resources:
+      #     requests:
+      #       cpu: 100m
+      #       memory: 20Mi
+      #     limits:
+      #       cpu: 100m
+      #       memory: 30Mi
       volumes:
       - name: apiserver-certs
         secret:
