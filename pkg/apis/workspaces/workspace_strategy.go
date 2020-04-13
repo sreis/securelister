@@ -43,31 +43,6 @@ func (WorkspaceStrategy) Validate(ctx context.Context, obj runtime.Object) field
 type WorkspaceREST struct {
 }
 
-func (r *WorkspaceREST) ListWorkspaces(ctx context.Context, options *internalversion.ListOptions) (runtime.Object, error) {
-	log.Println("ListWorkspaces")
-	return nil, fmt.Errorf("List not supported")
-}
-
-func (r *WorkspaceREST) GetWorkspace(ctx context.Context, id string, options *metav1.GetOptions) (runtime.Object, error) {
-	log.Println("GetWorkspace")
-	return nil, fmt.Errorf("Get not supported")
-}
-
-func (r *WorkspaceREST) CreateWorkspace(ctx context.Context, id *Workspace) (runtime.Object, error) {
-	log.Println("CreateWorkspace")
-	return nil, fmt.Errorf("Create not supported")
-}
-
-func (r *WorkspaceREST) UpdateWorkspace(ctx context.Context, id *Workspace) (runtime.Object, error) {
-	log.Println("UpdateWorkspace")
-	return nil, fmt.Errorf("Update not supported")
-}
-
-func (r *WorkspaceREST) DeleteWorkspace(ctx context.Context, id string) (bool, error) {
-	log.Println("DeleteWorkspace")
-	return false, fmt.Errorf("Delete not supported")
-}
-
 func (r *WorkspaceREST) New() runtime.Object {
 	log.Println("NewWorkspace")
 	return &Workspace{}
@@ -76,6 +51,24 @@ func (r *WorkspaceREST) New() runtime.Object {
 func (r *WorkspaceREST) NamespaceScoped() bool {
 	log.Println("NamespaceScoped")
 	return false
+}
+
+// NewList implements rest.Lister interface
+func (r *WorkspaceREST) NewList() runtime.Object {
+	log.Println("NewList")
+	return &WorkspaceList{}
+}
+
+// List implements rest.Lister interface
+func (r *WorkspaceREST) List(ctx context.Context, options *internalversion.ListOptions) (runtime.Object, error) {
+	log.Println("List")
+	return nil, fmt.Errorf("List not supported")
+}
+
+// ConvertToTable implements rest.TableConverter interface
+func (r *WorkspaceREST) ConvertToTable(ctx context.Context, object runtime.Object, tableOptions runtime.Object) (*metav1.Table, error) {
+	log.Println("ConvertToTable")
+	return nil, fmt.Errorf("ConvertToTable not supported")
 }
 
 func NewWorkspaceREST(_ generic.RESTOptionsGetter) rest.Storage {

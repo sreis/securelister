@@ -146,7 +146,7 @@ spec:
       containers:
       - name: apiserver
         image: sreis/securelister:latest
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: apiserver-certs
           mountPath: /apiserver.local.config/certificates
